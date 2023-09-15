@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import API_BASE_URL from './Config/apiConfig';
 import { Accordion } from 'flowbite-react';
+import BuildingOccupation from './BuildingOccupation';
 
 function FloorData() {
   const [data, setData] = useState(null);
@@ -17,7 +18,6 @@ function FloorData() {
         setLoading(false);
       })
       .catch((error) => {
-        // Handle any errors here
         console.error('Error fetching data:', error);
         setLoading(false);
       });
@@ -26,7 +26,7 @@ function FloorData() {
   return (
     <>
       <div>
-        <h1 className='text-4xl font-bold mb-6'>Geographic Context Space Data</h1>
+        <h1 className='text-4xl font-bold mb-6 hover:uppercase'>Affiche l’occupation de chaque pièce</h1>
         {loading ? (
           <p>Loading...</p>
         ) : (
@@ -37,7 +37,7 @@ function FloorData() {
               <div>
                 {data.children.map((child1) => (
                   <div key={child1.staticId}>
-                    <Accordion className='border-blue-700'>
+                    <Accordion className='border-blue-700 shadow-xl bg-green-100'>
                       <Accordion.Panel>
                         <Accordion.Title>
                           <p className='text-2xl'>Occupation du bâtiment : {child1.name}</p>
@@ -46,11 +46,11 @@ function FloorData() {
                           <div>
                             {child1.children.map((child2) => (
                               <div key={child2.staticId}>
-                                <Accordion.Content>
+                                <Accordion.Content className='bg-blue-100'>
                                   <Accordion className='border-blue-700'>
                                     <Accordion.Panel>
                                       <Accordion.Title>
-                                        <p>{child2.name}</p>
+                                        <p className='font-bold'>{child2.name}</p>
                                       </Accordion.Title>
                                       {/* Accessing the third level of nested data (children of grandchildren) */}
                                       {child2.children && child2.children.length > 0 && (
@@ -60,12 +60,11 @@ function FloorData() {
                                               <Accordion.Content>
                                                 <div className='flex flex-row justify-between'>
                                                   <div>
-                                                    <p>- {child3.name}</p>
+                                                    <p className='font-semibold'>- {child3.name}</p>
                                                   </div>
-                                                  {/* <div><p className='text-green-500'>{room.currentValue}</p></div> */}
+                                                  <BuildingOccupation data={child3.dynamicId} />
                                                 </div>
                                               </Accordion.Content>
-                                              {/* Continue to access deeper nested data if needed */}
                                             </div>
                                           ))}
                                         </div>
