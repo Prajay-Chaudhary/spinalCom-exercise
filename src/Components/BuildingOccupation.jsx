@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import API_BASE_URL from './Config/apiConfig';
+import { Spinner } from 'flowbite-react';
 
 function BuildingOccupation({ data }) {
   const [occupation, setOccupation] = useState(null);
@@ -31,6 +32,8 @@ function BuildingOccupation({ data }) {
       } catch (error) {
         console.error('Error fetching data:', error);
         setLoading(false);
+      } finally {
+        setLoading(false)
       }
     };
 
@@ -44,20 +47,22 @@ function BuildingOccupation({ data }) {
     }
 
     if (occupation) {
-      const fourthObjectValue = occupation[3]?.currentValue;
-      if (typeof fourthObjectValue === 'boolean') {
-        // Determine the CSS class based on 'fourthObjectValue'
-        const className = fourthObjectValue ? 'text-red-500 font-bold' : 'text-green-500 font-bold';
-        return <span className={className}>{fourthObjectValue ? 'TRUE' : 'FALSE'}</span>;
+      const isActive = occupation[3]?.currentValue;
+      if (typeof isActive === 'boolean') {
+        // Determine the CSS class based on 'isActive'
+        return <span className={`${isActive ? 'text-red-500 bg-red-100 border-red-200' : 'text-green-500 bg-green-100'} px-3 py-1 rounded-full font-semibold text-sm`}>{isActive ? 'TRUE' : 'FALSE'}</span>;
       }
     }
 
-    return <span className='text-slate-600 font-bold'>UNDEFINED</span>;
+    return <span className='text-slate-600 bg-slate-100 text-sm font-semibold px-3 py-2 rounded-full'>UNDEFINED</span>;
   };
 
   return (
     <div>
-      {loading ? <p>Loading...</p> : renderOccupation()}
+      {loading ? <Spinner
+        aria-label="Small spinner example"
+        size="sm"
+      /> : renderOccupation()}
     </div>
   );
 }
