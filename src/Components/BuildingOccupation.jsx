@@ -50,7 +50,7 @@ function BuildingOccupation({ data }) {
       const isActive = occupation[3]?.currentValue;
       if (typeof isActive === 'boolean') {
         // Determine the CSS class based on 'isActive'
-        return <span className={`${isActive ? 'text-red-500 bg-red-100 border-red-200' : 'text-green-500 bg-green-100'} px-3 py-1 rounded-full font-semibold text-sm`}>{isActive ? 'TRUE' : 'FALSE'}</span>;
+        return <span className={`${isActive ? 'text-green-500 bg-green-100' : 'text-red-500 bg-red-100 border-red-200'} px-3 py-1 rounded-full font-semibold text-sm`}>{isActive ? 'TRUE' : 'FALSE'}</span>;
       }
     }
 
