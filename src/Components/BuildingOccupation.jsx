@@ -12,7 +12,7 @@ function BuildingOccupation({ data }) {
       try {
         // Fetch data from the API endpoint based on the 'data' prop
         const response = await axios.get(`${API_BASE_URL}/room/${data}/control_endpoint_list`);
-        console.log('API Response:', response.data);
+        console.log('API Response room data:', response.data);
 
         if (Array.isArray(response.data) && response.data.length > 0) {
           // Check if the API response is an array and not empty
@@ -50,7 +50,7 @@ function BuildingOccupation({ data }) {
       const isActive = occupation[3]?.currentValue;
       if (typeof isActive === 'boolean') {
         // Determine the CSS class based on 'isActive'
-        return <span className={`${isActive ? 'text-green-500 bg-green-100' : 'text-red-500 bg-red-100 border-red-200'} px-3 py-1 rounded-full font-semibold text-sm`}>{isActive ? 'TRUE' : 'FALSE'}</span>;
+        return <span className={`${isActive ? 'text-red-500 bg-red-100 border-red-200' : 'text-green-500 bg-green-100'} px-3 py-1 rounded-full font-semibold text-sm`}>{isActive ? 'OCCUPÉ' : 'NON OCCUPÉ'}</span>;
       }
     }
 
@@ -68,3 +68,6 @@ function BuildingOccupation({ data }) {
 }
 
 export default BuildingOccupation;
+
+
+
